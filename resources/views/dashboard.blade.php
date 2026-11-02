@@ -4,14 +4,18 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
+        <ul>
+            @forelse ($products as $product)
+                <li>
+                    <strong>{{ $product->name }}</strong> - ${{ number_format($product->price, 2) }}
+                    @if ($product->stock > 0)
+                        <span style="color:green;">(Stock: {{ $product->stock }})</span>
+                    @else
+                        <span style="color:red;">(Agotado)</span>
+                    @endif
+                </li>
+            @empty
+                <li>No hay productos disponibles este momento.</li>
+            @endforelse
+        </ul>
 </x-app-layout>
